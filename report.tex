@@ -1,0 +1,174 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\begin{document}
+
+\title{Group Project 1: Modular Arithmetic}
+\author{Jeremy Gruzka and Ian Goodbody \\
+	Math 340 \\
+	LtCol Alfonso}
+\date{\today}
+\maketitle
+
+\section*{Problem Set}
+\subsection*{Problem 10}
+Find all solutions to $x$ in the equations:
+\begin{equation} \label{10b}
+	3x-1 \equiv_8 7
+\end{equation}
+\begin{equation} \label{10d}
+	2x-1 \equiv_{20} 6
+\end{equation}
+
+\paragraph*{}
+To solve equation \ref{10b}, we start with $1 \equiv_8 1$ and using \textit{Therom 2} procede to solve.
+\begin{align*}
+	3x-1 &\equiv_8 7 \\
+	(3x-1)+1 &\equiv_8 7+1 \\
+	3x &\equiv_8 8 \\
+	3x &\equiv_8 0 
+\end{align*}
+The reciporical of this equation becomes trivial as the product between 0 and any potential factor will 
+invariably yield 0 therefore:
+\begin{equation*} 
+	x \equiv_8 0
+\end{equation*}
+or x is any integer multiple of 8.
+
+\paragraph*{} 
+To sovle equation \ref{10d}, we will similary start with the statemnt 
+$1 \equiv_{20} 1$ and procede to solve.
+
+\begin{align*}
+	2x-1 &\equiv_{20} 6 \\
+	(2x-1)+1 &\equiv_{20} 6+1 \\
+	2x &\equiv_{20} 7 
+\end{align*}
+Now we must find the reciporical for 2 in mod 20. However, because 2 and 20 share a common factor other than 
+1, we cannot have a reciporical. This can be expressed by the implication
+
+\begin{gather*}
+	\textrm{Let: }K, L, k, l, n \in \mathbb{Z} \mid K = n \cdot k,\ L = n \cdot l \\
+	\left(n \neq 1 \right)\ \Rightarrow \ \left ( \forall x \in \mathbb{Z} \mid K \cdot x \bmod{L} \neq 1 \right ) \\
+\end{gather*}
+and can be proven using the contrapositive:
+\begin{gather*}
+	\left ( \exists x \in \mathbb{Z} \mid K \cdot x \bmod{L} = 1 \right)\ \Rightarrow \left( n = 1 \right) \\
+	\text{Assume:}\ K \cdot x = L \cdot q + 1,\ \text{where}\ q \in \mathbb{Z} \\
+	n \cdot k \cdot x = n \cdot l \cdot q + 1 \\
+	\frac{1}{n} = k \cdot x - l \cdot q
+\end{gather*}
+The conclusion then follows from the closure properties of integers over multiplication and addition
+\begin{gather*}
+	k \cdot x - l \cdot q \in \mathbb{Z} \\
+	\frac{1}{n} \in \mathbb{Z} \\
+	n = 1
+\end{gather*}
+Because 2 and 20 share a factor of 2, no integer reciporical for exists and there is no solution for $x$.
+
+\subsection*{Problem 12}
+\paragraph*{} 
+Show that if none of the numbers in the list $1 \cdot a, 2 \cdot a, \dots, (p-1) \cdot a$
+are congruent to $0 \bmod p$, then no two numbers in the list are congruent to eachother $\pmod p$.
+
+\paragraph*{}
+Given a prime number $p$ and an integer $a$ the problem above can be written
+\begin{gather*}
+	\textrm{Let}\ A \equiv \{1 \cdot a, 2 \cdot a, \dots,(p-1) \cdot a\} \\
+	\forall x \in A,\ x \bmod p \neq 0 \ \Rightarrow \ \forall y,z \in A\ \mid y 
+		\neq z,\ \left(y \bmod p \right) \neq \left (z \bmod p \right)
+\end{gather*}
+The implication can then be proven by the contrapositive.
+\begin{gather*}
+	\textrm{Assume} \ y,z \in A \mid y \neq z,\ \left(y \bmod p \right) = \left(z \bmod p \right)\\
+	y = m \cdot a = k \cdot p + r \\
+	z = n \cdot a = l \cdot p + r \\
+	\textrm{where} \ k,l,m,n,r \in \mathbb{Z} \mid  m,n,r < p \quad k \neq l \quad m \neq n 
+\end{gather*}
+Subtracting $z$ from $y$ then taking the modulus by $p$ simplifes the expression.
+\begin{gather*}
+	a(m-n) = p(k-l) \\
+	\left [ a\cdot (m-n) \right ] \bmod p = 0
+\end{gather*}
+By \textit{Therom 2}, the two factors can be seperated, and by the zero property of multiplication we can
+condlude that one or both of the terms must be 0.
+\begin{gather*}
+	(a \bmod p)\cdot \left [(m-n) \bmod p \right] = 0 \\
+	a \bmod p = 0 \quad \lor \quad (m-n) \bmod p = 0 \\
+	m,n < p \ \Rightarrow \ (m-n) \bmod p \neq 0 \\
+	\textrm{Therefore: } a \bmod p = 0 
+\end{gather*}
+$a$ then must be a multiple of $p$ so we can conclude:
+\begin{equation*}
+	\forall x \in A,\ x \bmod p = 0
+\end{equation*}
+Therefore, by the contapositive the original implication must be true.
+
+\subsection*{Problem 16}
+\paragraph*{}
+Given that we have RSA encrypted string with public key $n = 2773$ and an encryption key $e=157$
+we are tasked with decrypting the message:
+\begin{tabular}{l l l l l l l l l l}
+	\texttt{0245} & \texttt{2040} & \texttt{1698} & \texttt{1439} & \texttt{1364} & \texttt{1758} &
+	\texttt{0946} & \texttt{0881} & \texttt{1979} & \texttt{1130} 
+\end{tabular}
+
+\paragraph*{}
+The key to decrptying this message is to derrive the decryption key $d$ using the publicly available encryption
+key $e$ and the value $n$. First, a computer alogorithm was used to compute the prime roots of $n$ which were then arbitrarily
+set as constans $p$ and $q$. (Because n is relatively small and the prime factors are easiy to compute,
+this is a fairly easy encrption to break.)
+\begin{gather*}
+	n = 2773 = (47)(59) \\
+	p = 47 \quad q = 59
+\end{gather*}
+The next constant to be calculate is $k$ which can be found with the equation:
+\begin{equation} \label{k_eqn}
+	k = (p-1)(q-1)
+\end{equation}
+\begin{align*}
+	k &= (47-1)(59-1) \\
+	k &= 2668
+\end{align*}
+The final step in finding $d$ is to solve the following equation for integer values of $v$ and $d$.
+\begin{equation} \label{euclids_hell}
+	d \cdot e - v \cdot k = 1
+\end{equation}
+Solving with an initial guess of $v=1$ fortunately yields an integer value for $d$.
+\begin{align*}
+	d &\cdot e - k = 1 \\
+	d &= \frac{1 + k}{e} \\
+	d &= \frac{2668 + 1}{157} \\
+	d &= 17
+\end{align*}
+
+\paragraph*{}
+Decrpyting the message now relies on the coupled encryption and decryption equations, \ref{enc} and \ref{dec}
+respectively, where $M$ is the raw message number and $C$ is the codded message number.
+\begin{equation} \label{enc}
+	C = M^e \bmod n
+\end{equation}
+\begin{equation} \label{dec}
+	M = C^d \bmod n
+\end{equation}
+Using equation \ref{dec} the coded message can be converted into pairs of letters. 
+\begin{center}
+\begin{tabular}{l|c|c}
+	$C$ & $M = C^{17} \bmod 2773$ & String \\ \hline \hline
+	0245 & 2308 & \texttt{WH} \\
+	2040 & 0120 & \texttt{AT} \\
+	1698 & 1905 & \texttt{SE} \\
+	1439 & 2112 & \texttt{UL} \\
+	1364 & 0518 & \texttt{ER} \\
+	1758 & 1906 & \texttt{SF} \\
+	0946 & 0918 & \texttt{IR} \\
+	0881 & 1920 & \texttt{ST} \\
+	1979 & 1401 & \texttt{NA} \\
+	1130 & 1305 & \texttt{ME}
+\end{tabular} 
+\end{center}
+Ignoring the fact that spaces would be a trivial thing to add to the cypher, the string can be broken
+apart as \texttt{WHATS EULERS FIRST NAME}? Then assuming that \emph{Euler} refers to the $18^{th}$ century 
+swiss mathematician, the answer is \emph{Leonhard}.
+
+\end{document}
